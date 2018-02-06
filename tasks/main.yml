@@ -1,0 +1,16 @@
+---
+# tasks file for ansible-role-node_exporter_prometheus
+- name: Download node_exporter version
+  get_url:
+     url: {{ node_exporter_download_url }}
+     dest: "{{ node_exporter_download_location }} / node_exporter.tar.gz"
+
+- name: untar node_exporter
+  unarchive:
+     src: "{{ node_exporter_download_location }}/node_exporter.tar.gz"
+     dest: "{{ node_exporter_download_location }}"
+      
+- name: move node_exporter to /var/lib directory
+  command: mv "{{ node_exporter_download_location }}/node_exporter /var/lib/node_exporter"
+
+

@@ -1,0 +1,10 @@
+# echo "[Unit]
+Description=Node Exporter
+
+[Service]
+User=root
+ExecStart=/var/lib/node_exporter/node_exporter -collectors.enabled=diskstats,filefd,filesystem,loadavg,meminfo,netdev,stat,time,uname,vmstat
+
+
+[Install]
+WantedBy=default.target"

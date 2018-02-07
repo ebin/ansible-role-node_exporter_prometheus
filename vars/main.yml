@@ -2,6 +2,5 @@
 # vars file for ansible-role-node_exporter_prometheus
 
 node_exporter_download_url: https://github.com/prometheus/node_exporter/releases/download/v0.14.0/node_exporter-0.14.0.linux-amd64.tar.gz
-
-node_exporter_download_location: /usr/local/src/
-
+node_exporter_download_location: /usr/local/src
+node_exporter_downlaod_file: node_exporter-0.14.0.linux-amd64

@@ -10,16 +10,30 @@
      remote_src: yes
      src: "{{ node_exporter_download_location }}/{{node_exporter_downlaod_file}}.tar.gz"
      dest: "{{ node_exporter_download_location }}"
-      
-- name: move node_exporter to /var/lib directory
-  command: mv {{ node_exporter_download_location }}/{{node_exporter_downlaod_file}} /var/lib/node_exporter
 
-- name: create node_exporter service in systemd
+- name: create /var/lib/node_exporter directory
+  file:
+    path: /var/lib/node_exporter
+    state: directory
+
+- name: copy node_exporter to /var/lib/node_exporter directory
+  command: cp -rpf {{ node_exporter_download_location }}/{{node_exporter_downlaod_file}}/node_exporter /var/lib/node_exporter/
+
+- name: create node_exporter service in systemd for CentOS
   template:
     src: node_exporter.service.j2
     dest: /usr/lib/systemd/system/node_exporter.service
     owner: root
     group: root
+  when: ansible_distribution == "CentOS"
+
+- name: create node_exporter service in systemd for Ubuntu
+  template:
+    src: node_exporter.service.j2
+    dest: /etc/systemd/system/node_exporter.service
+    owner: root
+    group: root
+  when: ansible_distribution == "Ubuntu"
 
 - name: start node_exporter service
   systemd:
